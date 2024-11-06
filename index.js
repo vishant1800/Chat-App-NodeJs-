@@ -9,12 +9,12 @@ const io = socketio(server);
 io.on('connection', (socket) => {
     console.log("A user is connected", socket.id);
 
-    socket.on('from_client', () => {
-        console.log('Event coming from client');
+    socket.on('msg_send', (data) => {
+        console.log(data);
+        // io.emit('msg_rcvd', data); //everyone will receive the msg
+        // socket.emit('msg_rcvd', data); //whichever client sends the msg will receive it other will not receive it
+        socket.broadcast.emit('msg_rcvd', data); //except you, everyone will receive the msg
     })
-    setInterval(() => {
-        socket.emit('from_server');
-    }, 2000);
 })
 
 app.use('/', express.static(__dirname + '/public'));
