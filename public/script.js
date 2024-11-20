@@ -8,9 +8,12 @@ btn.onclick = function exec() {
     socket.emit('msg_send', {
         msg: InputMsg.value
     })
+
 }
 
+// listener
 socket.on('msg_rcvd', (data) => {
+    //console.log(data);
     let listMsg = document.createElement('li');
     listMsg.innerText = data.msg;
     msgList.appendChild(listMsg);
